@@ -1,0 +1,557 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add this to prevent horizontal scrolling globally */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth transition for theme changes */
+html {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+/* --- Theme Variables --- */
+@layer base {
+  :root {
+    /* Light Theme (Default - Pinkish) */
+    /* Base Light Theme Colors - Pinkish Palette */
+    --color-light-primary: #b7def1; /* Your original soft pink */
+    --color-light-secondary: #d0dde6; /* Your original lighter pink for outer background */
+    --color-light-card-bg: #cfe0f3; /* Distinct soft pink for card background */
+    --color-light-text-primary: #070707; /* Dark text for readability */
+    --color-light-text-secondary: #353434; /* Lighter text */
+    --color-light-border: #2b92ec; /* Pink border */
+    --color-light-input-border: #2979ce; /* Even softer pink for input borders */
+    --color-light-button-primary-bg: #7daee9; /* Hot pink for primary buttons */
+    --color-light-button-primary-text: #000000;
+    --color-light-button-secondary-bg: #ffffff; /* Ghost White for secondary buttons (text) */
+    --color-light-button-secondary-text: #4322a7;
+    --color-light-link: #9b08ea; /* Orchid for links */
+
+    /* Blob Colors (static for a consistent accent in hero, can be made theme-aware if needed) */
+    --color-blob-light-1: #013444; /* Dark Cyan/Blue */
+    --color-blob-light-2: #4b0246; /* Dark Pink/Purple */
+    --color-blob-light-3: #01293c; /* Dark Blue */
+
+    /* Input field specific background for light mode */
+    --color-light-input-bg: #abc1e0; /* Lavender Blush */
+
+    /* --- Theme-aware mappings for light mode (these are the ones used in JSX) --- */
+    --color-theme-bg: var(--color-light-secondary); /* Outer background */
+    --color-section-bg: var(--color-light-primary); /* For sections that need a distinct background from the main bg */
+    --color-theme-heading-primary: var(--color-light-text-primary);
+    --color-theme-text: var(--color-light-text-primary);
+    --color-theme-text-secondary: var(--color-light-text-secondary);
+    --color-nav-bg: rgba(255, 255, 255, 255); /* Navbar background (can be adjusted for pink if needed) */
+    --color-theme-border: var(--color-light-border);
+
+    /* Hero Section specific (light mode) - Keeping a static dark gradient for tech aesthetic */
+    --color-hero-bg: linear-gradient(to bottom right, #1a202c, #2d3748);
+    --color-hero-heading: #000000; /* White text on dark hero */
+    --color-hero-text: #1b1b1b; /* Lighter text on dark hero */
+    --color-hero-gradient-text-start: #40c4d6; /* Cyan-blue gradient start for "Vision" */
+    --color-hero-gradient-text-end: #02182b; /* Cyan-blue gradient end for "Vision" */
+
+    /* Buttons */
+    --color-theme-button-primary-bg: var(--color-light-button-primary-bg);
+    --color-theme-button-primary-hover: color-mix(in srgb, var(--color-light-button-primary-bg) 80%, black);
+    --color-theme-button-primary-text: var(--color-light-button-primary-text);
+
+    --color-button-secondary-bg: transparent; /* Changed to transparent for border-only look */
+    --color-button-secondary-text: var(--color-light-button-secondary-text);
+    --color-button-secondary-hover: transparent; /* Transparent hover for border-only */
+    --color-button-secondary-border: var(--color-light-button-secondary-text); /* Border color from secondary text */
+    --color-button-secondary-hover-alt: color-mix(in srgb, var(--color-light-button-secondary-text) 10%, rgb(194, 208, 223)); /* Very light background on hover */
+
+    /* Card */
+    --color-card-bg: var(--color-light-card-bg);
+    --color-card-bg-light: var(--color-light-secondary); /* For cards in general sections */
+    --color-card-hover-bg-light: #818ebf; /* Slightly different pink on hover */
+
+    /* Input/Progress */
+    --color-input-bg: 
+    --color-progress-bar-bg: var(--color-light-border); /* Progress bar background */
+
+    /* How It Works Section */
+    --color-heading-step: var(--color-light-text-secondary); /* Darker text for step numbers */
+    --color-step-arrow: var(--color-light-border); /* Gray/Pink for step arrows */
+    --color-gradient-1-start: #6e85f5; /* Pink */
+    --color-gradient-1-end: #0850ea; /* Orchid */
+    --color-gradient-2-start: #69b2ff; /* Hot Pink */
+    --color-gradient-2-end: #145eff; /* Deep Pink */
+    --color-gradient-3-start: #c0e6ff; /* Light Pink */
+    --color-gradient-3-end: #6ea0f5; /* Pink */
+
+    /* Stats Section */
+    --color-stat-icon-bg: var(--color-light-button-secondary-bg); /* Use light secondary button bg */
+    --color-stat-icon-color: var(--color-light-button-primary-bg); /* Use primary button color for icon */
+    --color-stat-icon-hover-bg: color-mix(in srgb, var(--color-stat-icon-bg) 90%, black);
+    --color-stat-number: var(--color-light-text-primary);
+    --color-stat-label: var(--color-light-text-secondary);
+
+    /* User Role Section / Accent Section (light mode) */
+    --color-accent-bg: linear-gradient(to right, #69aaff, #6e92f5); /* Pink gradient */
+    --color-accent-text-secondary: #d1f6ff; /* Lighter pink for text */
+    --color-accent-button-bg: #ffffff;
+    --color-accent-button-text: #69b4ff;
+
+    /* Success Stories Section / Accent Section 2 (light mode) - Static dark for tech aesthetic */
+    --color-section-accent-bg: linear-gradient(to bottom right, #13161c, #2d3748);
+    --color-section-accent-text-secondary: #0e0f0f; /* Lighter blue/gray for text on dark background */
+    --color-success-avatar-gradient: #899cbe; /* Light blue to light purple (static) */
+    --color-success-raised-bg: #05f8a7; /* Green (static) */
+
+    /* Why Choose Section */
+    --color-icon-bg: var(--color-light-button-secondary-bg); /* Light pink/white for icon background */
+    --color-icon-color: var(--color-light-button-primary-bg); /* Hot pink for icon color */
+    --color-success-color: #10b981; /* Green checkmark (static) */
+
+    /* CTA Section */
+    --color-cta-bg: linear-gradient(to right, #6e90f5, #8808ea); /* Hot pink to orchid gradient */
+    --color-cta-text-secondary: #d1f7ff; /* Light pink for text */
+    --color-cta-text-tertiary: #c0c2ff; /* Even lighter pink for small text */
+    --color-cta-button-primary-bg: #e5e9eb;
+    --color-cta-button-primary-text: #6eadf5;
+    --color-cta-button-secondary-border: #8c98c6;
+    --color-cta-button-secondary-text: #ffffff;
+
+    /* Footer */
+    --color-footer-bg: #333333; /* Dark gray for footer */
+    --color-footer-text: #a0aec0; /* Gray text */
+    --color-footer-link-hover: #ffffff;
+    --color-footer-logo-gradient: linear-gradient(to bottom right, #69e9ff, #0850ea); /* Pink to Orchid */
+
+    /* Helper variables to get RGB components from hex for rgba() */
+    --color-light-link-rgb: 234, 8, 226; /* RGB for #ea08e2 (Orchid) */
+
+    /* New variable for focus ring color with opacity */
+    --color-focus-ring: rgba(var(--color-light-link-rgb), 0.5);
+
+    /* --- NEW SIDEBAR SPECIFIC COLORS FOR LIGHT THEME --- */
+    --gradient-sidebar-start-light: #d0e2e6; /* Indigo-600 */
+    --gradient-sidebar-end-light: #5779a8; /* Indigo-500 */
+    --color-sidebar-light: #7688c9; /* Fallback/solid color if gradient doesn't apply */
+
+    /* Navigation Items (Light Theme) - assuming white/off-white text on gradient */
+    --color-nav-item-text-light: rgba(255, 255, 255, 0.9); /* White 90% opacity */
+    --color-nav-item-hover-bg-light: rgba(255, 255, 255, 0.15); /* White 15% opacity */
+    --color-nav-item-active-bg-light: rgba(255, 255, 255, 0.25); /* White 25% opacity */
+
+    /* User Info Card (Light Theme) - translucent white on gradient */
+    --color-user-card-bg-light: rgba(255, 255, 255, 0.15);
+    --color-user-card-border-light: rgba(255, 255, 255, 0.2);
+    --color-user-card-text-light: rgba(255, 255, 255, 0.95);
+    --color-user-card-role-bg-light: rgba(255, 255, 255, 0.2);
+    --color-user-card-role-text-light: rgba(255, 255, 255, 0.9);
+
+    /* Logout Button (Light Theme) - on gradient */
+    --color-logout-btn-bg-light: rgba(255, 255, 255, 0.1); /* Slightly more transparent */
+    --color-logout-btn-text-light: rgba(255, 255, 255, 0.95);
+    --color-logout-btn-hover-bg-light: rgba(255, 255, 255, 0.2);
+    --color-logout-btn-border-light: rgba(255, 255, 255, 0.3);
+    --color-logout-btn-icon-bg-light: rgba(255, 255, 255, 0.2);
+
+    /* sidebar light */
+    --color-primary-light: #464ee5; /* Indigo-600 (from sidebar setup) */
+    --color-accent-light: #0a0009; /* Emerald-500 (from sidebar setup) */
+    --color-text-light: #374151; /* Gray-700 (from sidebar setup) */
+    --color-background-light: #85b8ea; /* Gray-50 (from sidebar setup) */
+    --color-card-light: #9ad3ef; /* White (from sidebar setup) */
+
+    /* --- ADDED: Placeholder text color for light theme --- */
+    --color-light-input-placeholder: rgba(7, 7, 7, 0.6); /* Darker, slightly transparent for light theme */
+    --color-theme-input-placeholder: var(--color-light-input-placeholder);
+  }
+
+  /* Dark Theme Overrides */
+  .dark {
+    /* Base Dark Theme Colors - Your Provided Dark Palette */
+    --color-dark-primary: #1a202c; /* Your previous primary */
+    --color-dark-secondary: #2d3748; /* Your previous secondary */
+    --color-dark-card-bg: #2d3748;
+    --color-dark-text-primary: #e2e8f0;
+    --color-dark-text-secondary: #fbfdfe;
+    --color-dark-border: #4a5568;
+    --color-dark-input-border: #4a5568;
+    --color-dark-button-primary-bg: #6366f1; /* Indigo */
+    --color-dark-button-primary-text: #ffffff;
+    --color-dark-button-secondary-bg: transparent; /* Changed to transparent for border-only look */
+    --color-dark-button-secondary-text: #818cf8; /* Light Indigo */
+    --color-dark-link: #93c5fd; /* Light blue link */
+
+    /* Blob Colors (static for a consistent accent in hero, can be made theme-aware if needed) */
+    --color-blob-dark-1: #7484cd; /* Blue */
+    --color-blob-dark-2: #8676ab; /* Purple */
+    --color-blob-dark-3: #5195a3; /* Cyan */
+
+    /* Input field specific background for dark mode */
+    --color-dark-input-bg: #4a5568;
+
+    /* --- Theme-aware mappings for dark mode (these are the ones used in JSX) --- */
+    --color-theme-bg: var(--color-dark-primary);
+    --color-section-bg: var(--color-dark-secondary);
+    --color-theme-heading-primary: var(--color-dark-text-primary);
+    --color-theme-text: var(--color-dark-text-primary);
+    --color-theme-text-secondary: var(--color-dark-text-secondary);
+    --color-nav-bg: #121721;
+    --color-theme-border: var(--color-dark-border);
+
+    /* Hero Section specific (dark mode) - Static dark gradient for tech aesthetic */
+    --color-hero-bg: linear-gradient(to bottom right, #0f172a, #1e293b);
+    --color-hero-heading: #ffffff;
+    --color-hero-text: #cbd5e0;
+    --color-hero-gradient-text-start: #22d3ee; /* Lighter cyan-blue gradient start */
+    --color-hero-gradient-text-end: #38bdf8; /* Lighter cyan-blue gradient end */
+
+    /* Buttons */
+    --color-theme-button-primary-bg: var(--color-dark-button-primary-bg);
+    --color-theme-button-primary-hover: color-mix(in srgb, var(--color-dark-button-primary-bg) 80%, black);
+    --color-theme-button-primary-text: var(--color-dark-button-primary-text);
+
+    --color-button-secondary-bg: transparent;
+    --color-button-secondary-text: var(--color-dark-button-secondary-text);
+    --color-button-secondary-hover: transparent;
+    --color-button-secondary-border: var(--color-dark-button-secondary-text);
+    --color-button-secondary-hover-alt: rgba(255, 255, 255, 0.1);
+
+    /* Card */
+    --color-card-bg: var(--color-dark-card-bg);
+    --color-card-bg-light: var(--color-dark-secondary);
+    --color-card-hover-bg-light: #4a5568; /* A slightly lighter dark gray on hover */
+
+    /* Input/Progress */
+    --color-input-bg: var(--color-dark-input-bg);
+    --color-progress-bar-bg: var(--color-dark-border);
+
+    /* How It Works Section */
+    --color-heading-step: #7ab2e0; /* Lighter text for step numbers */
+    --color-step-arrow: #7ab2e0; /* Darker gray for step arrows */
+    --color-gradient-1-start: #6366f1; /* Indigo */
+    --color-gradient-1-end: #38bdf8; /* Light blue */
+    --color-gradient-2-start: #a855f7; /* Violet */
+    --color-gradient-2-end: #f472b6; /* Pink */
+    --color-gradient-3-start: #34d399; /* Green */
+    --color-gradient-3-end: #22d3ee; /* Cyan */
+
+    /* Stats Section */
+    --color-stat-icon-bg: #374151; /* Dark gray */
+    --color-stat-icon-color: #93c5fd; /* Light blue */
+    --color-stat-icon-hover-bg: #4a5568; /* A bit darker gray */
+    --color-stat-number: var(--color-dark-text-primary);
+    --color-stat-label: var(--color-dark-text-secondary);
+
+    /* User Role Section / Accent Section (dark mode) */
+    --color-accent-bg: linear-gradient(to right, #4338ca, #6d28d9); /* Darker indigo to dark violet */
+    --color-accent-text-secondary: #c7d2fe; /* Light indigo for text */
+    --color-accent-button-bg: #e0e7ff;
+    --color-accent-button-text: #4f46e5;
+
+    /* Success Stories Section / Accent Section 2 (dark mode) - Static dark for tech aesthetic */
+    --color-section-accent-bg: linear-gradient(to bottom right, #0f172a, #1e293b);
+    --color-section-accent-text-secondary: #cbd5e0; /* Lighter text */
+    --color-success-avatar-gradient: linear-gradient(to right, #4dd0e1, #64b5f6); /* Cyan-blue gradient (static) */
+    --color-success-raised-bg: #059669; /* Darker green (static) */
+
+    /* Why Choose Section */
+    --color-icon-bg: #374151; /* Dark gray */
+    --color-icon-color: #93c5fd; /* Light blue */
+    --color-success-color: #34d399; /* Green checkmark (static) */
+
+    /* CTA Section */
+    --color-cta-bg: linear-gradient(to right, #4338ca, #6d28d9); /* Darker indigo to dark violet */
+    --color-cta-text-secondary: #c7d2fe; /* Light indigo */
+    --color-cta-text-tertiary: #c7d2fe; /* Light indigo */
+    --color-cta-button-primary-bg: #e0e7ff;
+    --color-cta-button-primary-text: #4f46e5;
+    --color-cta-button-secondary-border: #c7d2fe;
+    --color-cta-button-secondary-text: #c7d2fe;
+
+    /* Footer */
+    --color-footer-bg: #0f172a; /* Even darker gray */
+    --color-footer-text: #94a3b8; /* Lighter gray */
+    --color-footer-link-hover: #e2e8f0;
+    --color-footer-logo-gradient: linear-gradient(to bottom right, #6366f1, #a855f7); /* Indigo to violet */
+
+    /* Helper variables to get RGB components from hex for rgba() */
+    --color-dark-link-rgb: 186, 85, 211; /* RGB for #BA55D3 (Medium Orchid) */
+
+    /* New variable for focus ring color with opacity */
+    --color-focus-ring: rgba(var(--color-dark-link-rgb), 0.5);
+
+    /* Navigation Items (Dark Theme) */
+    --color-nav-item-text-dark: #D1D5DB; /* Gray-300 */
+    --color-nav-item-hover-bg-dark: rgba(255, 255, 255, 0.08); /* Lighter hover for dark bg */
+    --color-nav-item-active-bg-dark: rgba(255, 255, 255, 0.15); /* Lighter active for dark bg */
+
+    /* User Info Card (Dark Theme) */
+    --color-user-card-bg-dark: rgba(255, 255, 255, 0.08); /* Slightly visible on dark sidebar */
+    --color-user-card-border-dark: rgba(255, 255, 255, 0.15);
+    --color-user-card-text-dark: #E5E7EB; /* Gray-200 */
+    --color-user-card-role-bg-dark: rgba(255, 255, 255, 0.15);
+    --color-user-card-role-text-dark: #D1D5DB; /* Gray-300 */
+
+    /* Logout Button (Dark Theme) */
+    --color-logout-btn-bg-dark: rgba(255, 255, 255, 0.05); /* Very subtle on dark bg */
+    --color-logout-btn-text-dark: #D1D5DB;
+    --color-logout-btn-hover-bg-dark: rgba(255, 255, 255, 0.1);
+    --color-logout-btn-border-dark: rgba(255, 255, 255, 0.2);
+    --color-logout-btn-icon-bg-dark: rgba(233, 133, 133, 0.1);
+
+    /* sidebar dark */
+    --gradient-sidebar-start-dark: #4f4f50; /* Indigo-600 */
+    --gradient-sidebar-end-dark: #1a191900; /* Indigo-500 */
+    --color-sidebar-light: #ff0303; /* Fallback/solid color if gradient doesn't apply (seems like a mismatch with actual light theme) */
+    --color-sidebar-dark: #374151;
+    --color-primary-dark: #374151;
+    --color-accent-dark: #34D399; /* Emerald-400 (from sidebar setup) */
+    --color-text-dark: #E5E7EB; /* Gray-200 (from sidebar setup) */
+    /* --color-background-dark: #1F2937;
+    --color-card-dark: #374151;  */
+
+    /* --- ADDED: Placeholder text color for dark theme --- */
+    --color-dark-input-placeholder: rgba(226, 232, 240, 0.7); /* Lighter, slightly transparent for dark theme */
+    --color-theme-input-placeholder: var(--color-dark-input-placeholder);
+  }
+
+  /* Base styles for dark mode transition */
+  body, h1, h2, h3, h4, h5, h6, p, span, div, input, select, textarea, button {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Ensure images don't get messed up by mix-blend-mode if not intended */
+  img {
+    mix-blend-mode: normal;
+  }
+
+  .dark .dark\:bg-\[\#374151\] {
+    background-color: #374151;
+}
+  /* Custom scrollbar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-theme-bg); /* Use theme background color for track */
+    border-radius: 10px;
+  }
+
+  /* UPDATED: Theme-aware scrollbar thumb using sidebar colors */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-sidebar-light); /* Use base sidebar color */
+    opacity: 0.3; /* Apply opacity */
+    border-radius: 10px;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-sidebar-dark); /* Use dark theme sidebar color */
+    opacity: 0.3; /* Apply opacity */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-sidebar-light);
+    opacity: 0.5;
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-sidebar-dark);
+    opacity: 0.5;
+  }
+
+  /* For Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    /* Use theme-aware colors for Firefox scrollbar */
+    scrollbar-color: var(--color-sidebar-light) var(--color-theme-bg); /* thumb color track color */
+    /* Note: Firefox's scrollbar-color doesn't support opacity directly on the thumb color.
+       You might need to adjust the `--color-sidebar-light` itself if you want a lighter thumb in Firefox. */
+  }
+
+  .dark .custom-scrollbar {
+    scrollbar-color: var(--color-sidebar-dark) var(--color-theme-bg);
+  }
+}
+
+/* Tailwind CSS utility classes using CSS variables */
+@layer utilities {
+  .bg-theme-bg { @apply bg-[var(--color-theme-bg)]; }
+  .bg-theme-section-bg { @apply bg-[var(--color-section-bg)]; }
+  .text-theme-heading-primary { @apply text-[var(--color-theme-heading-primary)]; }
+  .text-theme-text { @apply text-[var(--color-theme-text)]; }
+  .text-theme-text-secondary { @apply text-[var(--color-theme-text-secondary)]; }
+
+  .bg-theme-nav-bg { @apply bg-[var(--color-nav-bg)]; }
+  .border-theme-border { @apply border-[var(--color-theme-border)]; }
+
+  .bg-theme-hero-bg { @apply bg-[var(--color-hero-bg)]; }
+  .text-theme-hero-heading { @apply text-[var(--color-hero-heading)]; }
+  .text-theme-hero-text { @apply text-[var(--color-hero-text)]; }
+  .from-theme-hero-gradient-text-start { @apply from-[var(--color-hero-gradient-text-start)]; }
+  .to-theme-hero-gradient-text-end { @apply to-[var(--color-hero-gradient-text-end)]; }
+
+
+  /* Button classes */
+  .bg-theme-button-primary-bg { @apply bg-[var(--color-theme-button-primary-bg)]; }
+  .hover\:bg-theme-button-primary-hover { @apply hover:bg-[var(--color-theme-button-primary-hover)]; }
+  .text-theme-button-primary-text { @apply text-[var(--color-theme-button-primary-text)]; }
+
+
+  .bg-theme-button-secondary-bg { @apply bg-[var(--color-button-secondary-bg)]; }
+  .text-theme-button-secondary-text { @apply text-[var(--color-button-secondary-text)]; }
+  .hover\:bg-theme-button-secondary-hover { @apply hover:bg-[var(--color-button-secondary-hover)]; }
+  .border-theme-button-secondary-border { @apply border-[var(--color-button-secondary-border)]; }
+  .hover\:bg-theme-button-secondary-hover-alt { @apply hover:bg-[var(--color-button-secondary-hover-alt)]; }
+
+
+  .bg-theme-card-bg { @apply bg-[var(--color-card-bg)]; }
+  .bg-theme-card-bg-light { @apply bg-[var(--color-card-bg-light)]; }
+  .hover\:bg-theme-card-hover-bg-light { @apply hover:bg-[var(--color-card-hover-bg-light)]; }
+  .bg-theme-input-bg { @apply bg-[var(--color-input-bg)]; }
+  .bg-theme-progress-bar-bg { @apply bg-[var(--color-progress-bar-bg)]; }
+
+  .text-theme-heading-step { @apply text-[var(--color-heading-step)]; }
+  .text-theme-step-arrow { @apply text-[var(--color-step-arrow)]; }
+
+  /* REMOVED: These caused the error when trying to use them as standalone background colors.
+      Instead, use `bg-gradient-to-r from-[var(--color-gradient-X-start)] to-[var(--color-gradient-X-end)]` directly in JSX.
+  */
+  /* .from-theme-gradient-1-start { @apply from-[var(--color-gradient-1-start)]; } */
+  /* .to-theme-gradient-1-end { @apply to-[var(--color-gradient-1-end)]; } */
+  /* .from-theme-gradient-2-start { @apply from-[var(--color-gradient-2-start)]; } */
+  /* .to-theme-gradient-2-end { @apply to-[var(--color-gradient-2-end)]; } */
+  /* .from-theme-gradient-3-start { @apply from-[var(--color-gradient-3-start)]; } */
+  /* .to-theme-gradient-3-end { @apply to-[var(--color-gradient-3-end)]; } */
+
+
+  /* Stat Icons */
+  .bg-theme-stat-icon-bg { @apply bg-[var(--color-stat-icon-bg)]; }
+  .text-theme-stat-icon-color { @apply text-[var(--color-stat-icon-color)]; }
+  .group-hover\:bg-theme-stat-icon-hover-bg { @apply group-hover:bg-[var(--color-stat-icon-hover-bg)]; }
+  .text-theme-stat-number { @apply text-[var(--color-stat-number)]; }
+  .text-theme-stat-label { @apply text-[var(--color-stat-label)]; }
+
+  /* Input field specific classes for border and placeholder */
+  .border-theme-input-border { @apply border-[var(--color-theme-input-border)]; }
+  /* Ensure this variable is defined in :root/.dark blocks if you want to use it */
+  .placeholder-theme-input-placeholder::placeholder { @apply text-[var(--color-theme-input-placeholder)]; }
+  .focus\:border-theme-input-border-hover:focus { @apply focus:border-[var(--color-theme-input-border-hover)]; }
+  .ring-offset-theme-card-bg { @apply ring-offset-[var(--color-card-bg)]; }
+
+
+  /* Link classes */
+  .text-theme-link { @apply text-[var(--color-theme-link)]; }
+  .hover\:text-theme-link-hover { @apply hover:text-[var(--color-theme-link-hover)]; }
+
+  /* Blob specific classes */
+  /* These base colors (primary-light/dark, etc.) are separate from your existing theme colors
+     and correspond to the original Indigo/Emerald palette used in the sidebar design.
+     If you intend for them to match your 'pinkish' light theme or 'dark' gray theme,
+     you would need to adjust their values here or remove them if they're not explicitly used.
+  */
+
+  /* REMOVED: This specific utility was causing the error as it tries to apply a single color as a background for a gradient context. */
+  /* .bg-theme-gradient-start { @apply bg-[var(--color-theme-gradient-start)]; } */
+  .bg-theme-blob-1 { @apply bg-[var(--color-blob-light-1)]; }
+  .bg-theme-blob-2 { @apply bg-[var(--color-blob-light-2)]; }
+  .bg-theme-blob-3 { @apply bg-[var(--color-blob-light-3)]; }
+
+
+  /* Accent Section Classes */
+  .bg-theme-accent-bg { @apply bg-[var(--color-accent-bg)]; }
+  .text-theme-accent-text-secondary { @apply text-[var(--color-accent-text-secondary)]; }
+  .bg-theme-accent-button-bg { @apply bg-[var(--color-accent-button-bg)]; }
+  .text-theme-accent-button-text { @apply text-[var(--color-accent-button-text)]; }
+
+  /* Section Accent Classes (for success stories, etc.) */
+  .bg-theme-section-accent-bg { @apply bg-[var(--color-section-accent-bg)]; }
+  .text-theme-section-accent-text-secondary { @apply text-[var(--color-section-accent-text-secondary)]; }
+  .bg-theme-success-avatar-gradient { @apply bg-[var(--color-success-avatar-gradient)]; }
+  .bg-theme-success-raised-bg { @apply bg-[var(--color-success-raised-bg)]; }
+
+  /* Why Choose Section Classes */
+  .bg-theme-icon-bg { @apply bg-[var(--color-icon-bg)]; }
+  .text-theme-icon-color { @apply text-[var(--color-icon-color)]; }
+  .text-theme-success-color { @apply text-[var(--color-success-color)]; }
+
+  /* CTA Section Classes */
+  .bg-theme-cta-bg { @apply bg-[var(--color-cta-bg)]; }
+  .text-theme-cta-text-secondary { @apply text-[var(--color-cta-text-secondary)]; }
+  .text-theme-cta-text-tertiary { @apply text-[var(--color-cta-text-tertiary)]; }
+  .bg-theme-cta-button-primary-bg { @apply bg-[var(--color-cta-button-primary-bg)]; }
+  .text-theme-cta-button-primary-text { @apply text-[var(--color-cta-button-primary-text)]; }
+  .border-theme-cta-button-secondary-border { @apply border-[var(--color-cta-button-secondary-border)]; }
+  .text-theme-cta-button-secondary-text { @apply text-[var(--color-cta-button-secondary-text)]; }
+
+  /* Footer Classes */
+  .bg-theme-footer-bg { @apply bg-[var(--color-footer-bg)]; }
+  .text-theme-footer-text { @apply text-[var(--color-footer-text)]; }
+  .hover\:text-theme-footer-link-hover { @apply hover:text-[var(--color-footer-link-hover)]; }
+  .bg-theme-footer-logo-gradient { @apply bg-[var(--color-footer-logo-gradient)]; }
+}
+
+/* sidebar */
+.bg-sidebar-dark-gradient {
+    @apply bg-[var(--color-sidebar-gradient-dark)];}
+
+/* Animations */
+@keyframes blob {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite cubic-bezier(0.6, 0.2, 0.1, 1);
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Custom Utilities (if any) */
+.focus-ring-theme {
+  @apply focus:outline-none focus:ring-4;
+  /* This directly uses the --color-focus-ring variable which already includes opacity */
+  --tw-ring-color: var(--color-focus-ring);
+}
+
+/* === START: Autofill Background Transparency Fix === */
+/* This block is crucial for overriding browser autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /* Use a large, fully transparent box-shadow to cover the autofill background */
+    -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset !important;
+    box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset !important;
+
+    /* Ensure text color is preserved using your theme variable */
+    -webkit-text-fill-color: var(--color-theme-text, #ffffff) !important; /* Fallback to white */
+    color: var(--color-theme-text, #ffffff) !important; /* Standard property */
+
+    /* Long transition to prevent the autofill background from appearing visibly */
+    transition: background-color 9999s ease-in-out 0s, color 9999s ease-in-out 0s;
+
+    /* Explicitly set background to transparent and remove any browser-applied background image */
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Ensure placeholder text remains visible on transparent background for all inputs */
+input::placeholder {
+    color: var(--color-theme-input-placeholder, rgba(255, 255, 255, 0.7)) !important; /* Fallback to semi-transparent white */
+    opacity: 1; /* Ensure full opacity for placeholder, especially for Firefox */
+}
+/* === END: Autofill Background Transparency Fix === */
