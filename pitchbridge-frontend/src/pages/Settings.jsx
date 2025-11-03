@@ -7,9 +7,8 @@ import {
 
 const Settings = () => {
   useEffect(() => {
-    // CSS for animations (Fade-in and Blob)
     const style = document.createElement('style');
-    style.id = 'settings-animations'; // Give it an ID to prevent duplicates if component re-mounts
+    style.id = 'settings-animations'; 
 
     style.innerHTML = `
       @keyframes fadeIn {
@@ -55,8 +54,6 @@ const Settings = () => {
     if (!document.getElementById('settings-animations')) {
       document.head.appendChild(style);
     }
-
-    // Add class to body for specific background if desired
     // document.body.classList.add('settings-page-active');
 
     // Cleanup: Remove the style tag and body class when component unmounts
@@ -108,7 +105,6 @@ const Settings = () => {
     },
   ];
 
-  // Helper function to get color classes based on the chosen color scheme
   const getColorClasses = (color, type = 'bg') => {
     const colors = {
       blue: { bg: 'bg-blue-100 dark:bg-blue-900/40', text: 'text-blue-600 dark:text-blue-300', border: 'border-blue-200 dark:border-blue-700' },
