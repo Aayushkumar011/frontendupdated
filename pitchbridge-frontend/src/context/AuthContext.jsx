@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Effect to load user and token from localStorage on initial component mount
     useEffect(() => {
         const loadUserFromLocalStorage = () => {
             try {
@@ -18,7 +17,6 @@ export const AuthProvider = ({ children }) => {
                     setUser(parsedUser);
                     console.log("AuthContext: User loaded from localStorage:", parsedUser);
                 } else {
-                    // If either token or user is missing, clear both to ensure a clean state
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                     setUser(null);
@@ -35,9 +33,8 @@ export const AuthProvider = ({ children }) => {
         };
 
         loadUserFromLocalStorage();
-    }, []); // Empty dependency array means this runs only once on mount
+    }, []); 
 
-    // Effect to persist user to localStorage whenever `user` state changes
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
@@ -46,21 +43,19 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('user');
             console.log("AuthContext: User state cleared from localStorage.");
         }
-    }, [user]); // Re-run when 'user' state changes
+    }, [user]); 
 
-    // Logout function - only manages authentication state, no navigation
+    
     const logout = useCallback(() => {
         console.log("AuthContext: Logging out user and clearing state.");
-        setUser(null); // This triggers the useEffect above to clear 'user' from localStorage
+        setUser(null);
         localStorage.removeItem('token'); // Explicitly remove token here
     }, []);
 
-    // Function to update user profile data in state and localStorage
-    // This will be called from components like Profile.jsx
+   
     const updateUserProfile = useCallback((updates) => {
         setUser(prevUser => {
             const newUser = { ...prevUser, ...updates };
-            // The useEffect for user will handle saving to localStorage
             return newUser;
         });
         console.log("AuthContext: User profile updated in state with:", updates);
