@@ -55,7 +55,7 @@ const Settings = () => {
       document.head.appendChild(style);
     }
     // document.body.classList.add('settings-page-active');
-
+    //Used framer Motion for using pre-build animations for better User Experience and making code more readable
     // Cleanup: Remove the style tag and body class when component unmounts
     return () => {
       const existingStyle = document.getElementById('settings-animations');
