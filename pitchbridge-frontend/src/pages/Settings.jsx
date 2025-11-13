@@ -49,7 +49,7 @@ const Settings = () => {
       }
       */
     `;
-
+    // Empty dependency array means this runs once on mount and cleans up on unmount                            
     // Only append if it doesn't already exist (e.g., component unmounted/remounted)
     if (!document.getElementById('settings-animations')) {
       document.head.appendChild(style);
@@ -64,9 +64,9 @@ const Settings = () => {
       }
       // document.body.classList.remove('settings-page-active');
     };
-  }, []); // Empty dependency array means this runs once on mount and cleans up on unmount
+  }, []); 
 
-  // Define your settings options with paths, icons, descriptions, and colors
+  // Empty dependency array means this runs once on mount and cleans up on unmount
   const settingsOptions = [
     {
       name: 'Change Username', path: '/settings/username', icon: User,
